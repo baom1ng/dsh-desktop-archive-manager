@@ -1,0 +1,56 @@
+{
+  "name": "dsh-desktop-archive-manager",
+  "version": "0.1.0",
+  "description": "Archive manager for DeepSeek Harness Desktop: browse archived Session logs and delete them permanently, without patching the harness core (桌面端归档管理器：浏览并永久删除已归档的会话，无需修改 harness 核心).",
+  "type": "module",
+  "main": "lib/host.js",
+  "exports": {
+    ".": {
+      "default": "./lib/host.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/host.js",
+    "lib/core.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [],
+      "external": []
+    }
+  },
+  "keywords": [
+    "dsh-plugin",
+    "dsh",
+    "dsh-bundle",
+    "deepseek-harness",
+    "desktop",
+    "archive",
+    "sessions"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

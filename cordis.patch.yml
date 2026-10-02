@@ -1,0 +1,21 @@
+# The archive manager bundle patch: one host row carrying both halves.
+#
+# `dsh.client` in package.json is what turns this same row into the browser
+# half as well — the client-modules node half scans enabled Loader entries,
+# finds the declaration on this package, and serves lib/client.js.
+#
+# The row names its own entry file, patch-relative: app-boot converts a `./`
+# path to a file URL against this file. That keeps the row independent of how
+# the enclosing package is linked into the profile — including the first
+# install into an already-running app, where a bare package specifier can be
+# resolved before pnpm's link exists and Node then caches that miss.
+#
+# Desktop-only on purpose: this feature is the desktop app's archive surface
+# (sidebar panel, session-row menu, frame-wide dialogs), so the row is
+# disabled on every other profile — a web/headless run then composes this
+# bundle to nothing, instead of holding a row that waits for a webserver.
+# Same predicate the shipped bundles use for their desktop-only rows.
+- insert:
+    - id: desktop-archive-manager
+      name: "./lib/host.js"
+      disabled: !!js "ctx.get('profileContext')?.name !== 'desktop'"
