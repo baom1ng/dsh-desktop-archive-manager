@@ -1,0 +1,20 @@
+# Nothing here is needed to install or run the plugin — the shipped lib/ is prebuilt.
+
+# Dependencies (this package has none, but a local `pnpm install` may create them)
+node_modules/
+
+# Packed artifacts
+*.tgz
+_dist/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
