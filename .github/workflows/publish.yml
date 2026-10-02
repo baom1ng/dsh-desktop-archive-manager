@@ -1,0 +1,51 @@
+# Publish this plugin to npm when a version tag is pushed.
+#
+# One-time setup: add a repository secret named NPM_TOKEN
+# (Settings → Secrets and variables → Actions → New repository secret) holding an
+# npm "Automation" access token. Then:
+#
+#   git tag v0.1.0 && git push origin v0.1.0
+#
+# The job refuses to publish when the tag and package.json disagree, runs the test
+# suite first, and publishes with provenance so consumers can trace the artifact
+# back to this commit.
+
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+  id-token: write # required for npm provenance
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Tag must match package.json
+        run: |
+          pkg="$(node -p "require('./package.json').name + '@' + require('./package.json').version")"
+          tag="${GITHUB_REF_NAME#v}"
+          if [ "$pkg" != "${pkg%@*}@$tag" ]; then
+            echo "tag $GITHUB_REF_NAME does not match $pkg" >&2
+            exit 1
+          fi
+          echo "publishing $pkg"
+
+      - name: Test
+        run: node --test "test/*.test.mjs"
+
+      - name: Publish
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
