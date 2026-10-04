@@ -2,14 +2,14 @@
 
 English | [中文](README.zh.md)
 
-Manage the archived Sessions of **DeepSeek Harness Desktop**: browse them, restore them, and delete them permanently — the surface the harness itself does not ship.
+Manage the archived Sessions of **DeepSeek Harness**: browse them, restore them, and delete them permanently — the surface the harness itself does not ship. Written for the **desktop app**, and it works in any web-capable profile.
 
 > The harness archives Sessions but never deletes them. The shipped `ui-workspace` package states the limit outright:
 > *"No Session deletion — sessions can be archived but never deleted."*
-> This plugin fills that gap **without patching the harness core** — it works on a stock desktop install.
+> This plugin fills that gap **without patching the harness core** — it works on a stock install.
 
-**Requirements:** DeepSeek Harness Desktop (developed against 0.2.0-rc.2). Desktop profile only — the bundle row carries
-`disabled: !!js "ctx.get('profileContext')?.name !== 'desktop'"`, so `web` / `headless` / `tui` profiles compose this bundle to nothing.
+**Requirements:** the DeepSeek Harness Desktop app (developed against 0.2.0-rc.2), or any Harness profile with a web UI. The bundle row carries
+**no `disabled` gate** — it activates in every profile, and the web surface (host route plus browser half) simply stays quiet where no webserver runs.
 
 **How it differs from the existing [`session-archive-manager`](https://github.com/my-dsh-plugin/session-archive-manager):**
 that plugin adds `workspace.deleteSession` by patching the harness core and therefore needs a source checkout or a forked build.

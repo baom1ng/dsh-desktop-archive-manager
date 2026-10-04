@@ -2,7 +2,7 @@
 
 [English](README.md) | 中文
 
-给 DeepSeek Harness 桌面端补上「管理归档」的能力：**浏览已归档的会话，并把它们从磁盘上永久删除**。
+给 DeepSeek Harness 补上「管理归档」的能力：**浏览已归档的会话，并把它们从磁盘上永久删除**。为**桌面端**而写，带 webserver 的 profile（如 `dsh web`）同样可用。
 
 > 现状：DSH 自带归档（Archive）但从未提供删除。官方 `ui-workspace` 的已知限制里写着
 > “No Session deletion — sessions can be archived but never deleted”。
@@ -11,9 +11,8 @@
 这是一个**可安装的 DSH bundle 插件**：自带补丁层与浏览器端，通过 Plugin Manager / `dsh plugin` 安装，
 不需要手改配置档。
 
-**平台：仅 DeepSeek Harness Desktop。** 这是桌面端的归档界面，所以 bundle 补丁里的行带
-`disabled: !!js "ctx.get('profileContext')?.name !== 'desktop'"`——在 `web`/`headless`/`tui` 等其它配置档中
-本插件不会装载任何东西（而不是留一个等待 webserver 的行）。桌面端是唯一目标环境。
+**平台：任何 profile。** 主力环境是 DeepSeek Harness Desktop（开发验证于 0.2.0-rc.2），带 Web UI 的 profile（如 `dsh web`）同样可用。
+bundle 补丁里的行**不带 `disabled` 门控**：所有 profile 都会激活它，只是没有 webserver 时 Web 部分（主机路由与浏览器端）安静地不启用而已。
 
 ---
 

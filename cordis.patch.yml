@@ -10,12 +10,15 @@
 # install into an already-running app, where a bare package specifier can be
 # resolved before pnpm's link exists and Node then caches that miss.
 #
-# Desktop-only on purpose: this feature is the desktop app's archive surface
-# (sidebar panel, session-row menu, frame-wide dialogs), so the row is
-# disabled on every other profile — a web/headless run then composes this
-# bundle to nothing, instead of holding a row that waits for a webserver.
-# Same predicate the shipped bundles use for their desktop-only rows.
+# No `disabled` expression, on purpose. The loader evaluates such an expression
+# while it builds the entry tree — before any plugin has applied — so it can only
+# read services that already exist at that moment (app-boot's own, such as
+# `profileContext`). Probing a plugin-provided service like `webServer` therefore
+# evaluates to disabled on every cold start and never recovers, because `refresh()`
+# returns early for a disabled entry until the tree is rebuilt.
+# Nothing is lost by dropping the gate: the host half injects the web surface
+# optionally, so a profile without a webserver activates the row and simply
+# registers no route.
 - insert:
     - id: desktop-archive-manager
       name: "./lib/host.js"
-      disabled: !!js "ctx.get('profileContext')?.name !== 'desktop'"
