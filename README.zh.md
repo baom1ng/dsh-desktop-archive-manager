@@ -2,6 +2,8 @@
 
 [English](README.md) | 中文
 
+[![dshbase 实测可装](https://dshbase.com/badges/dsh-desktop-archive-manager.svg)](https://dshbase.com/zh/plugins/dsh-desktop-archive-manager/)
+
 给 DeepSeek Harness 补上「管理归档」的能力：**浏览已归档的会话，并把它们从磁盘上永久删除**。为**桌面端**而写，带 webserver 的 profile（如 `dsh web`）同样可用。
 
 > 现状：DSH 自带归档（Archive）但从未提供删除。官方 `ui-workspace` 的已知限制里写着
@@ -112,7 +114,7 @@ registry 包名都能装；桌面配置档除外（见上）。
 ```text
 dsh-desktop-archive-manager/
 ├── package.json          # dsh.bundle.patch + dsh.client（同一个包两半都在）
-├── cordis.patch.yml      # bundle 补丁层：插入一条 desktop-archive-manager 行（desktop 限定）
+├── cordis.patch.yml      # bundle 补丁层：插入一条 desktop-archive-manager 行（不带 disabled 门控）
 ├── lib/host.js           # 主机端：Cordis 插件 + POST /archive-manager/api
 ├── lib/client.js         # 浏览器端：预构建的 __ModuleLoader__ 包
 ├── lib/core.js           # 无依赖的删除内核（可单测）

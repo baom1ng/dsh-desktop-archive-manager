@@ -2,6 +2,8 @@
 
 English | [中文](README.zh.md)
 
+[![dshbase verified](https://dshbase.com/badges/dsh-desktop-archive-manager.svg)](https://dshbase.com/plugins/dsh-desktop-archive-manager/)
+
 Manage the archived Sessions of **DeepSeek Harness**: browse them, restore them, and delete them permanently — the surface the harness itself does not ship. Written for the **desktop app**, and it works in any web-capable profile.
 
 > The harness archives Sessions but never deletes them. The shipped `ui-workspace` package states the limit outright:
@@ -98,7 +100,7 @@ so whatever a live Session left behind disappears by itself on the **next start*
 ```text
 dsh-desktop-archive-manager/
 ├── package.json          # dsh.bundle.patch + dsh.client (both halves in one package)
-├── cordis.patch.yml      # bundle patch: inserts the desktop-archive-manager row (desktop-gated)
+├── cordis.patch.yml      # bundle patch: inserts the desktop-archive-manager row (no disabled gate)
 ├── lib/host.js           # host half: the Cordis plugin and POST /archive-manager/api
 ├── lib/client.js         # browser half: a prebuilt __ModuleLoader__ bundle
 ├── lib/core.js           # dependency-free deletion core (unit-tested)
